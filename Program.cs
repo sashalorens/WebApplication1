@@ -20,7 +20,8 @@ namespace WebApplication1
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            // builder.Services.AddSwaggerGen();
+            builder.Services.AddScoped<ICarManagement, CarManagement>();
 
             var app = builder.Build();
 
@@ -29,12 +30,17 @@ namespace WebApplication1
                 MockDataGenerator.Initialize(scope.ServiceProvider);
             }
 
+            app.UseMiddleware<RoutingMiddleware>();
+
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            /* if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
-            }
+            } */
+
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
 
             app.UseHttpsRedirection();
 
