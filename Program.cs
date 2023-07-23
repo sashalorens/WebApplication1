@@ -5,6 +5,7 @@ using WebApplication1.Models;
 
 namespace WebApplication1
 {
+    public delegate void PrintString(string s);
     public class Program
     {
         public static void Main(string[] args)
@@ -30,7 +31,7 @@ namespace WebApplication1
                 MockDataGenerator.Initialize(scope.ServiceProvider);
             }
 
-            app.UseMiddleware<RoutingMiddleware>();
+            // app.UseMiddleware<RoutingMiddleware>();
 
             // Configure the HTTP request pipeline.
             /* if (app.Environment.IsDevelopment())
@@ -38,6 +39,11 @@ namespace WebApplication1
                 app.UseSwagger();
                 app.UseSwaggerUI();
             } */
+
+            PrintString del = GreenTextClass.PrintGreen;
+            del("Green text");
+            del = YellowTextClass.PrintYellow;
+            del("Yellow text");
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
@@ -50,6 +56,24 @@ namespace WebApplication1
             app.MapControllers();
 
             app.Run();
+        }
+    }
+
+    class GreenTextClass
+    {
+        public static void PrintGreen(string s)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(s);
+        }
+    }
+
+    class YellowTextClass
+    {
+        public static void PrintYellow(string s)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(s);
         }
     }
 }
