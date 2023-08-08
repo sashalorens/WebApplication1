@@ -18,7 +18,6 @@ namespace WebApplication1.Controllers
         [HttpGet(Name = "GetCars")]
         public async Task<ActionResult<IEnumerable<Car>>> Get()
         {
-            Console.WriteLine("Getting!");
             return await _context.Cars.ToListAsync();
         }
     }
