@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using System;
+using WebApplication1.Interfaces;
 using WebApplication1.Models;
 
 namespace WebApplication1
@@ -16,12 +17,14 @@ namespace WebApplication1
             builder.Services.AddControllers();
 
             builder.Services.AddDbContext<CarContext>(opt => opt.UseInMemoryDatabase("CarsList"));
+            builder.Services.AddDbContext<PizzaContext>(opt => opt.UseInMemoryDatabase("PizzaList"));
 
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<ICarManagement, CarManagement>();
+            builder.Services.AddScoped<IPizzaService, PizzaService>();
 
             var app = builder.Build();
 

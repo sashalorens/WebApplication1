@@ -36,6 +36,37 @@ namespace WebApplication1
 
                 context.SaveChanges();
             }
+
+            using (var context = new PizzaContext(
+                serviceProvider.GetRequiredService<DbContextOptions<PizzaContext>>()))
+            {
+                if (context.Pizzas.Any())
+                {
+                    return;
+                }
+
+                context.Pizzas.AddRange(
+                    new Pizza
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Pepperoni",
+                        Price = 230.5,
+                    },
+                    new Pizza
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Hawaiian",
+                        Price = 210.5,
+                    },
+                    new Pizza
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Margherita",
+                        Price = 180,
+                    });
+
+                context.SaveChanges();
+            }
         }
     }
 }
